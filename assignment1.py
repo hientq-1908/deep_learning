@@ -4,12 +4,12 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import matplotlib.pyplot as plt
 
-def checkAccuracy(set):
+def checkAccuracy(set, pct):
 	labels = []
 	predicts = []
 	for person in set:
 		labels.append(person.getLabel())
-		predicts.append(p.predict(person))
+		predicts.append(pct.predict(person))
 
 	return metrics.accuracy_score(labels, predicts)
 
@@ -55,7 +55,7 @@ class Perceptron():
 			self.weights[-1] = self.weights[-1] + self.lr * error
 
 
-			accuracies.append(checkAccuracy(people))
+			accuracies.append(checkAccuracy(people, self))
 		self.his = accuracies
 
 class Person():
@@ -119,8 +119,8 @@ train_set, test_set = train_test_split(people, test_size = 0.25)
 
 p.train(train_set)
 
-print(checkAccuracy(train_set))
-print(checkAccuracy(test_set))
+print(checkAccuracy(train_set,p))
+print(checkAccuracy(test_set,p))
 
 plt.plot(p.his)
 plt.show()
